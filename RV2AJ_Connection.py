@@ -1,4 +1,4 @@
-import serial
+import serial as serial
 from tkinter import *
 from src import ObjectRecognizer, MySerialRobot, circlerecognizer
 
