@@ -10,35 +10,37 @@ class ObjectRecognizer():
 	def __del__(self):
 		cv2.destroyAllWindows()
 
-	def start_recognition(self, iterations = 0):
-		cap = cv2.VideoCapture(0, cv2.CAP_DSHOW)
-		img = cv2.imread('pics\e2.jpg')
+
+
+	def start_recognition(self, iterations = 0, cameraTestMode=True):
 		circle_rating = {}
-		if iterations:
-			for _ in range(iterations):
-				if (cap.isOpened()):
-					ret, frame = cap.read()
-					ret = True
+
+		if cameraTestMode:
+			img = cv2.imread('pics\e2.jpg')
+			if iterations:
+				for _ in range(iterations):
 					frame = img
-					if ret:
-						circle_rating, outer = self.circlerecognizer.circle_recognise(frame) # распознавание кругов
-						cv2.imshow('Recognition process...', outer)
-					else:
-						break
+					circle_rating, outer = self.circlerecognizer.circle_recognise(frame)  # распознавание кругов
+					cv2.imshow('Recognition process...', outer)
 					if cv2.waitKey(1) & 0xFF == ord('q'):
 						break
 		else:
-			while (cap.isOpened()):
-				ret, frame = cap.read()
-				if ret:
-					frame = cv2.flip(frame, 1)
-					circle_rating, outer = self.circlerecognizer.circle_recognise(frame)  # распознавание кругов
-					cv2.imshow('Recognition process...', outer)
-				else:
-					break
-				if cv2.waitKey(1) & 0xFF == ord('q'):
-					break
-		cap.release()
+			cap = cv2.VideoCapture(0, cv2.CAP_DSHOW)
+
+			if iterations:
+				for _ in range(iterations):
+					if (cap.isOpened()):
+						ret, frame = cap.read()
+						ret = True
+						if ret:
+							circle_rating, outer = self.circlerecognizer.circle_recognise(frame) # распознавание кругов
+							cv2.imshow('Recognition process...', outer)
+						else:
+							break
+						if cv2.waitKey(1) & 0xFF == ord('q'):
+							break
+
+			cap.release()
 		if circle_rating:
 			return circle_rating
 		else:
@@ -63,10 +65,10 @@ class ObjectRecognizer():
 					defined_circles[i], defined_circles[i+1] = defined_circles[i+1], defined_circles[i]
 			return defined_circles
 
-	def get_objects_coordinates(self):
+	def get_objects_coordinates(self, cameraTestMode=True):
 		t = time.time()
 		scan_frames_number: int = 50 # scan_frames_number is times of circle scan
-		circles = self.start_recognition(scan_frames_number)
+		circles = self.start_recognition(scan_frames_number, cameraTestMode)
 		def_circles = self.get_defined_circles(circles, scan_frames_number)
 		ordered_circles = self.get_objects_in_right_order(def_circles)
 		converted_circles = self.matrix_transformator.convert_to_absolute_coordinates(ordered_circles)

@@ -9,10 +9,31 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5.QtGui import QPixmap
 import RV2AJ_Connection
 from src import ObjectRecognizer
 
+
+# def start(self):
+#     r = ObjectRecognizer.ObjectRecognizer()
+#     r.get_objects_coordinates()
+
 class Ui_MainWindow(object):
+    def __init__(self):
+            self.raw = 'fff'
+
+
+
+
+    def start(self):
+        r = ObjectRecognizer.ObjectRecognizer()
+        self.conv, self.raw = r.get_objects_coordinates(cameraTestMode=self.TestMode.isChecked())
+
+        self.allowed = QtWidgets.QLabel(self.tab_2)
+        self.allowed.setText(str(self.raw))
+        #self.allowed.setAlignment()
+
+
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(627, 524)
@@ -32,7 +53,8 @@ class Ui_MainWindow(object):
         self.tabWidget.addTab(self.tab_2, "")
         self.TestMode = QtWidgets.QRadioButton(self.centralwidget)
         self.TestMode.setGeometry(QtCore.QRect(20, 160, 81, 21))
-        self.TestMode.setObjectName("TestMode")
+        self.TestMode.setObjectName("cameraTestMode")
+        self.TestMode.setChecked(True)
         self.groupBox = QtWidgets.QGroupBox(self.centralwidget)
         self.groupBox.setGeometry(QtCore.QRect(260, 30, 151, 121))
         self.groupBox.setObjectName("groupBox")
@@ -70,7 +92,14 @@ class Ui_MainWindow(object):
         self.tabWidget.setCurrentIndex(0)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
-        self.pushButton.triggered.connect(lambda : self.start())
+        # set image
+        self.image1 = QtWidgets.QLabel(self.openGLWidget)
+        self.image1.setPixmap(QPixmap('pics\e1.png'))
+        #self.image1.setGeometry()
+
+
+        self.pushButton.setText('start process')
+        self.pushButton.clicked.connect(self.start)
 
 
     def retranslateUi(self, MainWindow):
@@ -84,9 +113,7 @@ class Ui_MainWindow(object):
         self.pushButton_2.setText(_translate("MainWindow", "Open"))
         self.pushButton_3.setText(_translate("MainWindow", "Close"))
 
-    def start(self):
-        r = ObjectRecognizer()
-        r.get_objects_coordinates()
+
 
 
 if __name__ == "__main__":
