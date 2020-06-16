@@ -36,7 +36,7 @@ class Circlerecognizer():
 		return circles
 
 	def showOneCircle(self, x, y, r=29):
-		img = cv2.imread('pics\e2.jpg')
+		img = cv2.imread('pics/e2.jpg')
 		img = img.copy()
 		cv2.circle(img, (int(x), int(y)), r, (0, 0, 255), 4)
 		cv2.imshow('Moving...', img)

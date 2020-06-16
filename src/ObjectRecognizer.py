@@ -16,7 +16,7 @@ class ObjectRecognizer():
 		circle_rating = {}
 
 		if cameraTestMode:
-			img = cv2.imread('pics\e2.jpg')
+			img = cv2.imread('pics/e2.jpg')
 			if iterations:
 				for _ in range(iterations):
 					frame = img

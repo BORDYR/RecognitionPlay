@@ -1,3 +1,4 @@
+#!/usr/lib/python3.7
 # -*- coding: utf-8 -*-
 
 # Form implementation generated from reading ui file 'untitled.ui'
@@ -10,7 +11,7 @@
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtGui import QPixmap
-import RV2AJ_Connection
+#import RV2AJ_Connection
 from src import ObjectRecognizer
 
 
@@ -94,7 +95,7 @@ class Ui_MainWindow(object):
 
         # set image
         self.image1 = QtWidgets.QLabel(self.openGLWidget)
-        self.image1.setPixmap(QPixmap('pics\e1.png'))
+        self.image1.setPixmap(QPixmap('pics/e1.png'))
         #self.image1.setGeometry()
 
 
