@@ -6,6 +6,6 @@ opencv-python==4.2.0.34
 PyQt5==5.15.0
 PyQt5-sip==12.8.0
 pyserial==3.4
-PyYAML==5.3.1
+PyYAML==5.4
 serial==0.0.97
 
